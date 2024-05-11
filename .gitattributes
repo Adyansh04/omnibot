@@ -1,0 +1,2 @@
+# omnibot_yolo/omnibot_yolo/yolov8x-pose.pt filter=lfs diff=lfs merge=lfs -text
+# omnibot_yolo/omnibot_yolo/yolov8x.pt filter=lfs diff=lfs merge=lfs -text

@@ -1,0 +1,176 @@
+<?xml version="1.0" ?>
+<robot name="omnibot" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+<xacro:include filename="$(find omnibot_description)/urdf/materials.xacro" />
+<xacro:include filename="$(find omnibot_description)/urdf/omnibot.trans" />
+<xacro:include filename="$(find omnibot_description)/urdf/omnibot.gazebo" />
+<xacro:include filename="$(find omnibot_description)/urdf/ros2_control.urdf.xacro" />
+
+<link name="base_footprint"/>
+
+<joint name="base_footprint_joint" type="fixed">
+  <origin xyz="0 0 0.0106" rpy="0 0 0"/>
+  <parent link="base_footprint"/>
+  <child link="base_link"/>
+</joint>
+
+<link name="base_link">
+  <inertial>
+    <origin xyz="-0.0027168787438823 -0.00024420923545572236 0.06879625361767083" rpy="0 0 0"/>
+    <mass value="2.271971307257637"/>
+    <inertia ixx="0.007821" iyy="0.008079" izz="0.006936" ixy="-4.8e-05" iyz="-7e-06" ixz="3e-05"/>
+  </inertial>
+  <visual>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find omnibot_description)/meshes/base_link.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find omnibot_description)/meshes/base_link.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="wheel_2_link_1">
+  <inertial>
+    <origin xyz="-0.008769128668929132 0.015270306522884095 8.274069084416094e-06" rpy="0 0 0"/>
+    <mass value="0.1270196974399702"/>
+    <inertia ixx="1.6e-05" iyy="1.9e-05" izz="1.5e-05" ixy="-3e-06" iyz="0.0" ixz="-0.0"/>
+  </inertial>
+  <visual>
+    <origin xyz="0.027709 -0.048166 -0.0085" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find omnibot_description)/meshes/wheel_2_link_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin xyz="0.027709 -0.048166 -0.0085" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find omnibot_description)/meshes/wheel_2_link_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="wheel_1_link_1">
+  <inertial>
+    <origin xyz="0.01760894584883433 -4.108092348062824e-05 8.274069084419564e-06" rpy="0 0 0"/>
+    <mass value="0.1270196974399702"/>
+    <inertia ixx="2.1e-05" iyy="1.5e-05" izz="1.5e-05" ixy="-0.0" iyz="-0.0" ixz="0.0"/>
+  </inertial>
+  <visual>
+    <origin xyz="-0.055512 8.6e-05 -0.0085" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find omnibot_description)/meshes/wheel_1_link_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin xyz="-0.055512 8.6e-05 -0.0085" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find omnibot_description)/meshes/wheel_1_link_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="wheel_3_link_1">
+  <inertial>
+    <origin xyz="-0.008840288621883803 -0.015229966759758365 8.274069084417829e-06" rpy="0 0 0"/>
+    <mass value="0.1270196974399702"/>
+    <inertia ixx="1.6e-05" iyy="1.9e-05" izz="1.5e-05" ixy="3e-06" iyz="-0.0" ixz="-0.0"/>
+  </inertial>
+  <visual>
+    <origin xyz="0.027858 0.048079 -0.0085" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find omnibot_description)/meshes/wheel_3_link_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin xyz="0.027858 0.048079 -0.0085" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find omnibot_description)/meshes/wheel_3_link_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="lidar_link_1">
+  <inertial>
+    <origin xyz="0.01572744785340128 -0.03173001991250517 0.024230508055298527" rpy="0 0 0"/>
+    <mass value="0.5574524497090474"/>
+    <inertia ixx="0.000291" iyy="0.000416" izz="0.000552" ixy="9.9e-05" iyz="2.2e-05" ixz="-4.1e-05"/>
+  </inertial>
+  <visual>
+    <origin xyz="0.026373 -0.038321 -0.132" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find omnibot_description)/meshes/lidar_link_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin xyz="0.026373 -0.038321 -0.132" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find omnibot_description)/meshes/lidar_link_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="camera_link_1">
+  <inertial>
+    <origin xyz="0.0013912562362842357 6.592765832259644e-05 0.00038953437992488016" rpy="0 0 0"/>
+    <mass value="0.006742869651497901"/>
+    <inertia ixx="0.0" iyy="0.0" izz="0.0" ixy="-0.0" iyz="0.0" ixz="-0.0"/>
+  </inertial>
+  <visual>
+    <origin xyz="-0.0741 0.004278 -0.114816" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find omnibot_description)/meshes/camera_link_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin xyz="-0.0741 0.004278 -0.114816" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find omnibot_description)/meshes/camera_link_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<joint name="wheel2_base_joint" type="continuous">
+  <origin xyz="-0.027709 0.048166 0.0085" rpy="0 0 0"/>
+  <parent link="base_link"/>
+  <child link="wheel_2_link_1"/>
+  <axis xyz="-0.498656 0.8668 -0.0"/>
+</joint>
+
+<joint name="wheel1_base_joint" type="continuous">
+  <origin xyz="0.055512 -8.6e-05 0.0085" rpy="0 0 0"/>
+  <parent link="base_link"/>
+  <child link="wheel_1_link_1"/>
+  <axis xyz="0.999999 -0.001552 -0.0"/>
+</joint>
+
+<joint name="wheel3_base_joint" type="continuous">
+  <origin xyz="-0.027858 -0.048079 0.0085" rpy="0 0 0"/>
+  <parent link="base_link"/>
+  <child link="wheel_3_link_1"/>
+  <axis xyz="-0.501343 -0.865249 0.0"/>
+</joint>
+
+<joint name="lidar_base_joint" type="fixed">
+  <origin xyz="-0.026373 0.038321 0.132" rpy="0 0 0"/>
+  <parent link="base_link"/>
+  <child link="lidar_link_1"/>
+</joint>
+
+<joint name="camera_base_joint" type="fixed">
+  <origin xyz="0.0741 -0.004278 0.114816" rpy="0 0 0"/>
+  <parent link="base_link"/>
+  <child link="camera_link_1"/>
+</joint>
+
+</robot>

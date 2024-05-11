@@ -1,0 +1,29 @@
+joy_node:
+  ros__parameters:
+    device_id: 0 
+    deadzone: 0.5
+    autorepeat_rate: 50.0 #ms
+
+
+teleop_node:
+  ros__parameters:
+    axis_linear: 
+      x: 1
+      y: 0
+    scale_linear: 
+      x: 1.0
+      y: 1.0
+    scale_linear_turbo: 
+      x: 2.0
+      y: 2.0
+
+    axis_angular: 
+      yaw: 3
+    scale_angular: 
+      yaw: 12.5
+    scale_angular_turbo: 
+      yaw: 15.0
+
+    require_enable_button: false
+    enable_turbo_button: 5
+
