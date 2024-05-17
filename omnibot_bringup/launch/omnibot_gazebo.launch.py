@@ -20,6 +20,8 @@ def generate_launch_description():
 
     rviz_config_file = os.path.join(share_dir, 'config', 'display.rviz')
 
+    world_file_path = os.path.join(get_package_share_directory('omnibot_bringup'), 'worlds', 'my_world.world')
+
 
     robot_state_publisher_node = Node(
         package='robot_state_publisher',
@@ -59,7 +61,8 @@ def generate_launch_description():
             ])
         ]),
         launch_arguments={
-            'pause': 'true'
+            'pause': 'true',
+            'world': world_file_path
         }.items()
     )
 

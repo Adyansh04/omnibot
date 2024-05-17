@@ -20,7 +20,8 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'controller = omnibot_scripts.controller:main'
+            'controller = omnibot_scripts.controller:main',
+            'lidar_to_odom = omnibot_scripts.lidar_to_odom:main'
         ],
     },
 )

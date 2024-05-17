@@ -109,6 +109,9 @@
     <visualize>true</visualize>
     <topic>imu/data_raw</topic>
     <plugin filename="libgazebo_ros_imu_sensor.so" name="imu_plugin">
+      <ros>
+        <argument>~/out:=imu/data</argument>
+      </ros>
       <topicName>imu/data_raw</topicName>
       <bodyName>imu_link</bodyName>
       <updateRateHZ>10.0</updateRateHZ>
