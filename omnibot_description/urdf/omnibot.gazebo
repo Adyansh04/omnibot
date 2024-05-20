@@ -16,22 +16,22 @@
 
 <gazebo reference="wheel_2_link_1">
   <material>${body_color}</material>
-  <mu1>0.2</mu1>
-  <mu2>0.2</mu2>
+  <mu1>0.5</mu1>
+  <mu2>0.5</mu2>
   <self_collide>true</self_collide>
 </gazebo>
 
 <gazebo reference="wheel_1_link_1">
   <material>${body_color}</material>
-  <mu1>0.2</mu1>
-  <mu2>0.2</mu2>
+  <mu1>0.5</mu1>
+  <mu2>0.5</mu2>
   <self_collide>true</self_collide>
 </gazebo>
 
 <gazebo reference="wheel_3_link_1">
   <material>${body_color}</material>
-  <mu1>0.2</mu1>
-  <mu2>0.2</mu2>
+  <mu1>0.5</mu1>
+  <mu2>0.5</mu2>
   <self_collide>true</self_collide>
 </gazebo>
 
@@ -70,7 +70,7 @@
   <sensor name="laser" type="ray">
     <pose>0 0 0 0 0 0</pose>
     <visualize>true</visualize>
-    <update_rate>10</update_rate>
+    <update_rate>5</update_rate>
     <ray>
       <scan>
         <horizontal>
@@ -85,11 +85,11 @@
         <max>10.0</max>
         <resolution>0.01</resolution>
       </range>
-      <noise>
+      <!-- <noise>
         <type>gaussian</type>
         <mean>0.0</mean>
         <stddev>0.01</stddev>
-      </noise>
+      </noise> -->
     </ray>
     <plugin name="laser_controller" filename="libgazebo_ros_ray_sensor.so">
       <ros>
@@ -101,7 +101,7 @@
   </sensor>
 </gazebo>
 
-<gazebo reference="imu_link">
+<!-- <gazebo reference="imu_link">
   <gravity>true</gravity>
   <sensor name="imu_sensor" type="imu">
     <always_on>true</always_on>
@@ -122,6 +122,75 @@
       <initialOrientationAsReference>false</initialOrientationAsReference>
     </plugin>
     <pose>0 0 0 0 0 0</pose>
+  </sensor>
+</gazebo> -->
+
+<gazebo reference="imu_link">
+  <sensor name="imu_sensor" type="imu">
+   <plugin filename="libgazebo_ros_imu_sensor.so" name="imu_plugin">
+      <ros>
+        <namespace>/demo</namespace>
+        <remapping>~/out:=imu/data</remapping>
+      </ros>
+      <initial_orientation_as_reference>false</initial_orientation_as_reference>
+    </plugin>
+    <always_on>true</always_on>
+    <update_rate>100</update_rate>
+    <visualize>true</visualize>
+    <imu>
+      <angular_velocity>
+        <x>
+          <noise type="gaussian">
+            <mean>0.0</mean>
+            <stddev>2e-4</stddev>
+            <bias_mean>0.0000075</bias_mean>
+            <bias_stddev>0.0000008</bias_stddev>
+          </noise>
+        </x>
+        <y>
+          <noise type="gaussian">
+            <mean>0.0</mean>
+            <stddev>2e-4</stddev>
+            <bias_mean>0.0000075</bias_mean>
+            <bias_stddev>0.0000008</bias_stddev>
+          </noise>
+        </y>
+        <z>
+          <noise type="gaussian">
+            <mean>0.0</mean>
+            <stddev>2e-4</stddev>
+            <bias_mean>0.0000075</bias_mean>
+            <bias_stddev>0.0000008</bias_stddev>
+          </noise>
+        </z>
+      </angular_velocity>
+      <linear_acceleration>
+        <x>
+          <noise type="gaussian">
+            <mean>0.0</mean>
+            <stddev>1.7e-2</stddev>
+            <bias_mean>0.1</bias_mean>
+            <bias_stddev>0.001</bias_stddev>
+          </noise>
+        </x>
+        <y>
+          <noise type="gaussian">
+            <mean>0.0</mean>
+            <stddev>1.7e-2</stddev>
+            <bias_mean>0.1</bias_mean>
+            <bias_stddev>0.001</bias_stddev>
+          </noise>
+        </y>
+        <z>
+          <noise type="gaussian">
+            <mean>0.0</mean>
+            <stddev>1.7e-2</stddev>
+            <bias_mean>0.1</bias_mean>
+            <bias_stddev>0.001</bias_stddev>
+          </noise>
+        </z>
+      </linear_acceleration>
+    </imu>
   </sensor>
 </gazebo>
 

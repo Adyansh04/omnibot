@@ -23,14 +23,22 @@ def generate_launch_description():
 
     ## NODES
 
-    joy_node = Node(
+    ekf_node = Node(
             package='robot_localization',
             executable='ekf_node',
             name='ekf_filter_node',
             output='screen',
             parameters=[ekf_params],
         )
+    
+    complementary_filter = Node(
+        package= 'imu_complementary_filter',
+        executable='complementary_filter_node',
+        name='complementary_filter_node'
+        )
 
     return LaunchDescription([
-   
+        complementary_filter,
+        ekf_node
+        
     ])

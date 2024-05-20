@@ -6,6 +6,7 @@ from time import time
 
 from sensor_msgs.msg import LaserScan
 from nav_msgs.msg import Odometry
+from sensor_msgs.msg import Imu
 
      # print(len(range))
         
@@ -35,6 +36,12 @@ class LidarToOdom(Node):
             '/odom',
             10)
         
+        self.create_subscription(
+            Imu,
+            '/imu',
+            self.imu_callback,
+        )
+        
         self.prev_front_dist = None
         self.prev_back_dist = None
         self.prev_left_dist = None
@@ -51,6 +58,12 @@ class LidarToOdom(Node):
         self.y_vel = 0.0
 
         self.threshold = 0.5  # Threshold to ignore sudden large changes
+        
+        #quaternion variables
+        self.x_quat = 0.0
+        self.y_quat = 0.0
+        self.z_quat = 0.0
+        self.w_quat = 0.0
 
         
     def lidar_callback(self, msg):
@@ -114,6 +127,7 @@ class LidarToOdom(Node):
             odom_msg = Odometry()
             odom_msg.header.frame_id = "odom"
             odom_msg.header.stamp = current_time
+            odom_msg.child_frame_id = "base_footprint"
 
             odom_msg.pose.pose.position.x = self.x
             odom_msg.pose.pose.position.y = self.y
@@ -122,18 +136,44 @@ class LidarToOdom(Node):
             odom_msg.twist.twist.linear.x = self.x_vel
             odom_msg.twist.twist.linear.y = self.y_vel
             odom_msg.twist.twist.linear.z = 0.0
+            
+            odom_msg.pose.pose.orientation.x = self.x_quat
+            odom_msg.pose.pose.orientation.y = self.y_quat
+            odom_msg.pose.pose.orientation.z = self.z_quat
+            odom_msg.pose.pose.orientation.w = self.w_quat
 
             self.odom_publisher.publish(odom_msg)
    
             
-      
+    def imu_callback(self, msg):
+        self.get_logger().info("IMU data received")
+        self.x_quat = msg.orientation.x
+        self.y_quat = msg.orientation.y
+        self.z_quat = msg.orientation.z
+        self.w_quat = msg.orientation.w
+        # print(self.x_quat)
+        # print(self.y_quat)
+        # print(self.z_quat)
+        # print(self.w_quat)
         
         
         
-    def get_time(self):
-        #Function to return two values seconds and nanoseconds
-        t = time()
-        return int(t), int((t - int(t)) * 1000000000)
+        # print(msg.orientation.x)
+        # print(msg.orientation.y)
+        # print(msg.orientation.z)
+        # print(msg.orientation.w)
+        
+        # print(msg.angular_velocity.x)
+        # print(msg.angular_velocity.y)
+        # print(msg.angular_velocity.z)
+        
+        # print(msg.linear_acceleration.x)
+        # print(msg.linear_acceleration.y)
+        # print(msg.linear_acceleration.z)
+        
+        # print(msg.orientation_covariance)
+        # print(msg.angular_velocity_covariance)
+        # print(msg.linear_acceleration
         
         
 def main(args=None):

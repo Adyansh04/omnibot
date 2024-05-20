@@ -33,7 +33,9 @@ class CamObjectDetectNode(Node):
         # self.conf = self.get_parameter('conf').get_parameter_value().double_value
         # self.model = YOLO(model_name)
 
-        self.model = YOLO('/home/adyansh/omnibot_ws/src/omnibot_yolo/omnibot_yolo/yolov8x.pt')
+        self.model = YOLO('/home/adyansh/omnibot_ws/src/omnibot_yolo/omnibot_yolo/yolov8n.pt')
+        self.model_pose = YOLO('/home/adyansh/omnibot_ws/src/omnibot_yolo/omnibot_yolo/yolov8x-pose.pt')
+
         self.iou = 0.5
         self.conf = 0.6
 
@@ -86,6 +88,7 @@ class CamObjectDetectNode(Node):
         cv2.waitKey(1)
 
         self.yolo_object_detect(img)
+        self.yolo_pose_detect(img)
         
     def image_uncompressed_callback(self, msg):
         self.get_logger().info("Uncompressed Image received")
@@ -104,9 +107,24 @@ class CamObjectDetectNode(Node):
         cv2.waitKey(1)
 
         bridge = cv_bridge.CvBridge()
-        annotated_frame_msg = bridge.cv2_to_imgmsg(annotated_frame, encoding='passthrough')
+        annotated_frame_msg = bridge.cv2_to_imgmsg(annotated_frame, encoding="bgr8")
 
         self.publisher.publish(annotated_frame_msg)
+        
+    def yolo_pose_detect(self, img):
+        results = self.model_pose.track(img, persist=True, conf=self.conf, iou=self.iou)
+
+        annotated_pose_frame = results[0].plot()
+
+        cv2.imshow('YOLOv8 Pose Tracking', annotated_pose_frame)
+        cv2.waitKey(1)
+
+        bridge_2 = cv_bridge.CvBridge()
+        annotated_frame_msg = bridge_2.cv2_to_imgmsg(annotated_pose_frame, encoding="bgr8")
+
+        self.publisher.publish(annotated_frame_msg)
+    
+    
 
 
 def main(args=None):
